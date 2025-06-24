@@ -2,6 +2,7 @@ const quoteDisplay = document.getElementById('quoteDisplay');
 const newQuoteBtn = document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 const newQuoteText = document.getElementById("newQuoteText");
 const newQuoteCategory = document.getElementById("newQuoteCategory");
+const quoteList = document.getElementById('quoteList');
 
 const quotes = [
   { text: "Be yourself; everyone else is already taken.", category: "Inspiration" },
@@ -12,7 +13,7 @@ const quotes = [
 function showRandomQuote() {
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quoteToBeDisplayed = quotes[randomIndex]
-  quoteDisplay.innerHTML = `"${quoteToBeDisplayed.text}" - ${quoteToBeDisplayed.category}`;
+  quoteList.innerHTML = `"${quoteToBeDisplayed.text}" - ${quoteToBeDisplayed.category}`;
 }
 
 function createAddQuoteForm() {
@@ -23,8 +24,9 @@ function createAddQuoteForm() {
   if (newQuote !== '' && newCategory !== '') {
 
     quotes.push({text: newQuote, category: newCategory});
-
-    quoteDisplay.innerHTML = newestQuote;
+    const list = document.createElement('li');
+    list.textContent = newestQuote;
+    quoteList.appendChild(list);
 
         // Clear input fields after showing
     newQuoteText.value = '';
