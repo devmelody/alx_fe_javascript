@@ -12,7 +12,7 @@ const quotes = [
 function showRandomQuote() {
   const randomIndex = Math.floor(Math.random() * quotes.length);
   const quoteToBeDisplayed = quotes[randomIndex]
-  quoteDisplay.textContent = `"${quoteToBeDisplayed.text}" - ${quoteToBeDisplayed.category}`;
+  quoteDisplay.innerHTML = `"${quoteToBeDisplayed.text}" - ${quoteToBeDisplayed.category}`;
 }
 
 function createAddQuoteForm() {
@@ -24,7 +24,7 @@ function createAddQuoteForm() {
 
     quotes.push({text: newQuote, category: newCategory});
 
-    quoteDisplay.textContent = newestQuote;
+    quoteDisplay.innerHTML = newestQuote;
 
         // Clear input fields after showing
     newQuoteText.value = '';
