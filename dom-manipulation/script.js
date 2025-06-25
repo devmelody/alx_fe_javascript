@@ -55,7 +55,7 @@ window.onload = () => {
   }
 };
 
-function download() {
+function exportToJsonFile() {
   //Create a blob that shows data and data type.
   const blob = new Blob([JSON.stringify(quotes, null, 2)], {
     type: "application/json",
