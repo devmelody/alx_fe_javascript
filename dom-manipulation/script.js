@@ -154,45 +154,42 @@ function filterQuotes() {
 }
 
 function fetchQuotesFromServer() {
-  fetch("http://localhost:3000/quotes")
-    .then(res => res.json())
-    .then(serverQuotes => {
-      syncWithLocal(serverQuotes);
-    })
-    .catch(err => console.error("Server fetch error:", err));
+  fetch("https://<your-project>.mockapi.io/quotes")
+  .then(res => res.json())
+  .then(serverQuotes => syncWithLocal(serverQuotes))
+  .catch(err => console.error("Fetch error:", err));
 }
-
-// Call every 15 seconds
 setInterval(fetchQuotesFromServer, 15000);
 
 function syncWithLocal(serverQuotes) {
   const localQuotes = JSON.parse(localStorage.getItem("saved")) || [];
 
-  const newQuotes = serverQuotes.filter(
-    serverQ => !localQuotes.some(localQ => localQ.text === serverQ.text)
+  const newOnes = serverQuotes.filter(
+    s => !localQuotes.some(l => l.id === s.id)
   );
 
-  if (newQuotes.length > 0) {
-    const updated = [...localQuotes, ...newQuotes];
-    localStorage.setItem("saved", JSON.stringify(updated));
+  if (newOnes.length > 0) {
+    const merged = [...localQuotes, ...newOnes];
+    localStorage.setItem("saved", JSON.stringify(merged));
     quotes.length = 0;
-    updated.forEach(q => quotes.push(q));
+    merged.forEach(q => quotes.push(q));
     populateCategories();
     filterQuotes();
-    showSyncNotification(newQuotes.length);
+    showSyncNotification(newOnes.length);
   }
 }
 
 function showSyncNotification(count) {
-  const notice = document.getElementById("syncNotice");
-  notice.textContent = `${count} new quote(s) synced from server.`;
-  notice.style.display = "block";
-  setTimeout(() => {
-    notice.style.display = "none";
-  }, 5000);
+  const el = document.getElementById("syncNotice");
+  el.textContent = `${count} new quote(s) synced from server.`;
+  el.style.display = "block";
+  setTimeout(() => el.style.display = "none", 5000);
 }
 
-
+function manualSync() {
+  fetchQuotesFromServer();
+  alert("Manual sync triggered.");
+}
 
 //<input type="file" id="importFile" accept=".json" />
 //<button onclick="importQuotes()">Import Quotes</button>
