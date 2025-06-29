@@ -222,7 +222,7 @@ function syncQuotes(serverQuotes) {
     localStorage.setItem("quotes", JSON.stringify(quotes));
     updateQuoteList();
     populateCategories();
-    showNotification(`🔄 Synced ${newOrUpdated} quote(s) from server`);
+    showNotification("Quotes synced with server!");
   }
 }
 
