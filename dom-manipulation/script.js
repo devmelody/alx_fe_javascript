@@ -204,7 +204,7 @@ async function postQuoteToServer(quote) {
 }
 
 
-function handleServerSync(serverQuotes) {
+function syncQuotes(serverQuotes) {
   let newOrUpdated = 0;
 
   serverQuotes.forEach(serverQuote => {
