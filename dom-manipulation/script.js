@@ -36,6 +36,9 @@ function createAddQuoteForm() {
 
     populateCategories();
     filterQuotes();
+    showNotification("✅ Quote added locally");
+
+    postQuoteToServer(quoteObj);
 
     // Clear input fields after showing
     newQuoteText.value = "";
@@ -176,6 +179,30 @@ async function fetchQuotesFromServer() {
 
 // Simulate periodic fetch every 15 seconds
 setInterval(fetchQuotesFromServer, 15000);
+
+async function postQuoteToServer(quote) {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: quote.text,
+        body: quote.category,
+        userId: 1
+      })
+    });
+
+    const data = await response.json();
+    console.log("✅ Quote posted to server:", data);
+    showNotification("📤 Quote posted to server (mock)");
+  } catch (error) {
+    console.error("Failed to post quote:", error);
+    showNotification("❌ Failed to post quote");
+  }
+}
+
 
 function handleServerSync(serverQuotes) {
   let newOrUpdated = 0;
