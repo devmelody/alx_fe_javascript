@@ -34,6 +34,9 @@ function createAddQuoteForm() {
     list.textContent = newestQuote;
     quoteList.appendChild(list);
 
+    populateCategories();
+    filterQuotes();
+
     // Clear input fields after showing
     newQuoteText.value = "";
     newQuoteCategory.value = "";
@@ -110,6 +113,46 @@ function importFromJsonFile(event) {
     fileReader.readAsText(file);
 
 }
+
+function populateCategories() {
+  const categories = [...new Set(quotes.map(q => q.category))];
+  const select = document.getElementById('categoryFilter');
+
+  select.innerHTML = `<option value="all">All Categories</option>`;
+
+  categories.forEach(category => {
+    const createOption = document.createElement('option');
+    createOption.value = category;
+    createOption.textContent = category;
+    select.appendChild(createOption);
+  });
+
+  const lastSelected = localStorage.getItem('selectedCategory');
+  if (lastSelected) {
+    select.value = lastSelected;
+  }
+}
+
+function filterQuotes() {
+  const selectedCategory = document.getElementById("categoryFilter").value;
+  const listContainer = document.getElementById("quoteList");
+
+  localStorage.setItem('selectedCategory', selectedCategory);
+
+  // Clear the current list
+  listContainer.innerHTML = "";
+
+  const filteredQuotes = selectedCategory === "all"
+    ? quotes
+    : quotes.filter(q => q.category === selectedCategory);
+
+  filteredQuotes.forEach(q => {
+    const li = document.createElement("li");
+    li.textContent = `"${q.text}" - ${q.category}`;
+    listContainer.appendChild(li);
+  });
+}
+
 
 //<input type="file" id="importFile" accept=".json" />
 //<button onclick="importQuotes()">Import Quotes</button>
