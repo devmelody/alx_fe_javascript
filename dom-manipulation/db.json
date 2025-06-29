@@ -1,0 +1,19 @@
+{
+  "quotes": [
+    {
+      "id": 1,
+      "text": "Be yourself; everyone else is already taken.",
+      "category": "Inspiration"
+    },
+    {
+      "id": 2,
+      "text": "Simplicity is the ultimate sophistication.",
+      "category": "Wisdom"
+    },
+    {
+      "id": 3,
+      "text": "Stay hungry, stay foolish.",
+      "category": "Motivation"
+    }
+  ]
+}
