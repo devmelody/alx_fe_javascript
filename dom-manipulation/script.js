@@ -154,7 +154,7 @@ function filterQuotes() {
 }
 
 function fetchQuotesFromServer() {
-  fetch("https://<your-project>.mockapi.io/quotes")
+  fetch("https://jsonplaceholder.typicode.com/todos/1")
   .then(res => res.json())
   .then(serverQuotes => syncWithLocal(serverQuotes))
   .catch(err => console.error("Fetch error:", err));
